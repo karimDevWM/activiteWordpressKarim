@@ -129,6 +129,8 @@
 							<?php
 									endwhile;
 								endif;
+								echo '<h3>pagination</h3>';
+								posts_nav_link(); // Après la boucle
 							?>
 
 						<!-- Pagination -->
@@ -162,10 +164,9 @@
 										?>
 											<article class="mini-post">
 												<header>
-													<img src="<?= the_post_thumbnail('custom-size') ?>
-													<h3><a href="<?=the_permalink()?>"><?=the_title()?></a></h3>
+													<div><?= the_post_thumbnail('custom-size') ?></div>
+													<h3><a href="<?=the_permalink()?>"><?=the_title()?></a><img src="http://localhost/messaoud/activiteWordpress/wp-content/uploads/2022/03/avatar.jpg"/></h3>
 													<time class="published" datetime="2015-10-20"><?= get_the_date() ?></time>
-													<a href="#" class="author"><img src="images/avatar.jpg" alt="" /></a>
 												</header>
 											</article>
 										<?php 
@@ -178,51 +179,36 @@
 						<!-- Posts List -->
 							<section>
 								<ul class="posts">
-									<li>
-										<article>
-											<header>
-												<h3><a href="single.html">Lorem ipsum fermentum ut nisl vitae</a></h3>
-												<time class="published" datetime="2015-10-20">October 20, 2015</time>
-											</header>
-											<a href="single.html" class="image"><img src="images/pic08.jpg" alt="" /></a>
-										</article>
-									</li>
-									<li>
-										<article>
-											<header>
-												<h3><a href="single.html">Convallis maximus nisl mattis nunc id lorem</a></h3>
-												<time class="published" datetime="2015-10-15">October 15, 2015</time>
-											</header>
-											<a href="single.html" class="image"><img src="images/pic09.jpg" alt="" /></a>
-										</article>
-									</li>
-									<li>
-										<article>
-											<header>
-												<h3><a href="single.html">Euismod amet placerat vivamus porttitor</a></h3>
-												<time class="published" datetime="2015-10-10">October 10, 2015</time>
-											</header>
-											<a href="single.html" class="image"><img src="images/pic10.jpg" alt="" /></a>
-										</article>
-									</li>
-									<li>
-										<article>
-											<header>
-												<h3><a href="single.html">Magna enim accumsan tortor cursus ultricies</a></h3>
-												<time class="published" datetime="2015-10-08">October 8, 2015</time>
-											</header>
-											<a href="single.html" class="image"><img src="images/pic11.jpg" alt="" /></a>
-										</article>
-									</li>
-									<li>
-										<article>
-											<header>
-												<h3><a href="single.html">Congue ullam corper lorem ipsum dolor</a></h3>
-												<time class="published" datetime="2015-10-06">October 7, 2015</time>
-											</header>
-											<a href="single.html" class="image"><img src="images/pic12.jpg" alt="" /></a>
-										</article>
-									</li>
+									<!-- latest articles  -->
+									<h3>latest 5 best articles</h3>
+									<?php 
+										$args = array
+												(
+													'numberposts'=> 5,
+												);
+										
+										$latestPosts = get_posts($args);
+										
+										if(!empty($latestPosts))
+										{
+											foreach($latestPosts as $ltPsts)
+											{
+									?>
+												<li class="">
+													<article>
+														<div><?= get_the_post_thumbnail($ltPsts, 'custom-size') ?></div>
+														<header>
+															<h3><a href="<?= get_the_permalink($ltPsts) ?>"><?= get_the_title($ltPsts) ?></a></h3>
+															<time class="published" datetime="2015-10-20"><?= get_the_date('',$ltPsts) ?></time>
+														</header>
+														<a href="single.html" class="image"><img src="images/pic08.jpg" alt="" /></a>
+													</article>
+												</li>
+									<?php
+											}
+										}
+
+									?>
 								</ul>
 							</section>
 
